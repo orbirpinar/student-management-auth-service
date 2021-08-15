@@ -1,0 +1,63 @@
+version: '3'
+
+volumes:
+  postgres_data:
+    driver: local
+
+services:
+  postgres:
+    image: postgres:13
+    container_name: postgres
+    environment:
+      POSTGRES_DB: keycloak
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: secret
+    ports:
+      - 5434:5432
+  keycloak:
+    image: jboss/keycloak:12.0.3
+    container_name: auth-server
+    environment:
+      DB_VENDOR: POSTGRES
+      DB_ADDR: postgres
+      DB_DATABASE: keycloak
+      DB_USER: admin
+      DB_PASSWORD: secret
+      KEYCLOAK_USER: admin
+      KEYCLOAK_PASSWORD: secret
+      PROXY_ADDRESS_FORWARDING: "true"
+    command:
+      - "-Dkeycloak.migration.action=import -Dkeycloak.migration.provider=singleFile -Dkeycloak.migration.file=/opt/jboss/keycloak/imports/realm.json  -Dkeycloak.migration.strategy=OVERWRITE_EXISTING  -Dkeycloak.profile.feature.upload_scripts=enabled"
+    volumes:
+      - ./target/custom-event-listener.jar://opt/jboss/keycloak/standalone/deployments/custom-event-listener.jar
+      - ./keycloak/import/realm.json:/opt/jboss/keycloak/imports/realm.json
+    ports:
+      - 8084:8080
+    depends_on:
+      - postgres
+  zookeeper:
+    image: wurstmeister/zookeeper
+    container_name: zookeper
+    ports:
+      - "2181:2181"
+  kafka:
+    image: wurstmeister/kafka:2.13-2.7.0
+    container_name: kafka
+    restart: unless-stopped
+    ports:
+      - "9092:9092"
+    expose:
+      - "9093"
+    environment:
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_ADVERTISED_LISTENERS: INSIDE://${KAFKA_INSIDE_URL}:${KAFKA_INSIDE_PORT},
+        OUTSIDE://${KAFKA_OUTSIDE_URL}:${KAFKA_OUTSIDE_PORT}
+      KAFKA_LISTENERS: INSIDE://0.0.0.0:${KAFKA_INSIDE_PORT},OUTSIDE://0.0.0.0:${KAFKA_OUTSIDE_PORT}
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INSIDE:PLAINTEXT,OUTSIDE:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: INSIDE
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_CREATE_TOPICS: "userRegister:1:1"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    depends_on:
+      - zookeeper
