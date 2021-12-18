@@ -1,6 +1,0 @@
-student/management/auth/KeycloakEventListener/CustomEventListenerProvider$1.class
-student/management/auth/Kafka/KeycloakEvent.class
-student/management/auth/KeycloakEventListener/CustomEventListenerProvider.class
-student/management/auth/Kafka/KafkaProducer.class
-student/management/auth/Kafka/IKafkaConstant.class
-student/management/auth/KeycloakEventListener/CustomEventListenerProviderFactory.class
