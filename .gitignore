@@ -76,3 +76,18 @@ fabric.properties
 
 .idea
 .env
+/.project
+/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst
+/target/custom-event-listener.jar
+/target/classes/student/management/auth/KeycloakEventListener/CustomEventListenerProvider$1.class
+/target/classes/student/management/auth/KeycloakEventListener/CustomEventListenerProvider.class
+/target/classes/student/management/auth/KeycloakEventListener/CustomEventListenerProviderFactory.class
+/target/classes/student/management/auth/Kafka/IKafkaConstant.class
+/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst
+/target/classes/META-INF/jboss-deployment-structure.xml
+/target/classes/student/management/auth/Kafka/KafkaProducer.class
+/target/classes/student/management/auth/Kafka/KeycloakEvent.class
+/.settings/org.eclipse.m2e.core.prefs
+/target/classes/META-INF/services/org.keycloak.events.EventListenerProviderFactory
+/target/maven-archiver/pom.properties
+/target/student-management-auth-service-1.0-SNAPSHOT.jar
