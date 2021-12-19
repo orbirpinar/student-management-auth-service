@@ -42,7 +42,7 @@ public class CustomEventListenerProvider implements EventListenerProvider {
                 break;
             case LOGIN:
                 KafkaProducer.publish(KeycloakEvent.LOGIN.getTopicName(),newRegisteredUser.getUsername());
-                log.info("REGISTER EVENT PUBLISHED TO KAFKA");
+                log.info("LOGIN EVENT PUBLISHED KAFKA");
                 break;
             case DELETE_ACCOUNT:
 //                KafkaProducer.publish(MyEventType.DELETE_ACCOUNT.getTopicName(), newRegisteredUser.getUsername());

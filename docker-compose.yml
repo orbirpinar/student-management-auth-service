@@ -31,6 +31,7 @@ services:
     volumes:
       - ./target/custom-event-listener.jar://opt/jboss/keycloak/standalone/deployments/custom-event-listener.jar
       - ./keycloak/import/realm.json:/opt/jboss/keycloak/imports/realm.json
+      - ./keycloak/export:/opt/jboss/keycloak/export-dir
     ports:
       - 8084:8080
     depends_on:
@@ -56,7 +57,7 @@ services:
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INSIDE:PLAINTEXT,OUTSIDE:PLAINTEXT
       KAFKA_INTER_BROKER_LISTENER_NAME: INSIDE
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
-      KAFKA_CREATE_TOPICS: "userRegister:1:1"
+      KAFKA_CREATE_TOPICS: "user_register:1:1,login:1:1"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     depends_on:
