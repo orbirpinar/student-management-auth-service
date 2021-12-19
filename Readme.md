@@ -56,4 +56,4 @@ Jar file deploy automatically When  keycloak tomcat server up and running.
 
 Open administration console select custom even listener in this case(email) and click saved.
 
-![console](https://imgur.com/a/i9I2dSy)
+https://imgur.com/a/i9I2dSy
